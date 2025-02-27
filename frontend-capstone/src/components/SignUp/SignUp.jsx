@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import {useState} from 'react'
 import './SignUp.css'
-import {isAlpha, isAlphanumeric, isEmail} from 'validator'
-import axios from 'axios'
-import { Slide, toast } from 'react-toastify'
+import { isAlpha, isAlphanumeric, isEmail } from "validator"
+import { Slide, toast } from "react-toastify"
+import Axios from '../../utils/Axios'
+
 
 function SignUp() {
-    //Introduce states to hold the sign-up information
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -18,7 +18,7 @@ function SignUp() {
     const [usernameError, setUsernameError] = useState('')
     const [passwordError, setPasswordError] = useState('')
     const [passwordConfirmError, setPasswordConfirmError] = useState('')
-
+    
     const handleOnSubmit = async (e) => {
         e.preventDefault()
         // plug in those error states
@@ -56,7 +56,7 @@ function SignUp() {
             passwordConfirmError.length === 0
         ){
             try {
-                const user = await axios.post('http://localhost:3000/api/user/create-user', {
+                const user = await Axios.post('/user/create-user', {
                     firstName, lastName, username, email, password
                 })
                 if(user){
@@ -83,7 +83,6 @@ function SignUp() {
         }
     }
 
-
   return (
     <div className="container">
         <div className="form-text">Sign up</div>
@@ -101,7 +100,7 @@ function SignUp() {
                             onChange={(event) => setFirstName(event.target.value)}
                         />
                         <div className="errorMessage">
-                            {firstNameError}
+                            
                         </div>
                     </div>
                     <div className="inline-container">
@@ -113,9 +112,9 @@ function SignUp() {
                             name="lastName"
                             value={lastName}
                             onChange={(event) => setLastName(event.target.value)}
-                            />
+                        />
                         <div className="errorMessage">
-                            {lastNameError}
+                            
                         </div>
                     </div>
                 </div>
@@ -131,7 +130,7 @@ function SignUp() {
                             onChange={(event) => setEmail(event.target.value)}
                         />
                         <div className="errorMessage">
-                            {emailError}
+                            
                         </div>
                     </div>
                 </div>
@@ -147,7 +146,7 @@ function SignUp() {
                             onChange={(event) => setUsername(event.target.value)}
                         />
                         <div className="errorMessage">
-                            {usernameError}
+                           
                         </div>
                     </div>
                 </div>
@@ -163,7 +162,7 @@ function SignUp() {
                             onChange={(event) => setPassword(event.target.value)}
                         />
                         <div className="errorMessage">
-
+                            
                         </div>
                     </div>
                 </div>
@@ -179,7 +178,7 @@ function SignUp() {
                             onChange={(event) => setConfirmPassword(event.target.value)}
                         />
                         <div className="errorMessage">
-                            {passwordConfirmError}
+                            
                         </div>
                     </div>
                 </div>
