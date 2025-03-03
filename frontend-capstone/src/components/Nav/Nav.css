@@ -1,6 +1,6 @@
 .Navbar {
     height: 75px;
-    background-color: black;
+    background-color: lightskyblue;
     color: white;
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@
   }
   .h1-logo a {
     text-decoration: none;
-    color: white;
+    color: black;
   }
   .h1-logo h1 {
     font-size: 20px;
@@ -29,14 +29,14 @@
   }
   div ul li a {
     text-decoration: none;
-    color: white;
+    color: black;
   }
   .selected {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid black;
   }
 
   .active{
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid black;
     
   }
   .right-side-nav ul li:not(:last-child) {

@@ -1,27 +1,29 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-// import { Link } from 'react-router-dom'
-// import TravelList from './TravelList'
-// import './Travel.css'
+import { Link } from 'react-router-dom'
+import TravelList from './TravelList'
+import './Travel.css'
 
     const FlightSearch = ()=>{
         const [origin, setOrigin] = useState('')
         const [destination, setDestination] = useState('')
         const [departureDate, setDepartureDate] = useState('')
+        const [returnDate, setReturnDate] = useState('')
         const [flights, setFlights] = useState([])
+        const API_KEY = 'c5883776698052b67a7a4a5e742705f52b7b644f924093a50d59101ad190ed91'
 
     const handleOnSearch = async(e)=>{
         e.preventDefault()
+        const url = `https://serpapi.com/search.json?engine=google_flights&q=${origin}+to+${destination}&departure_date=${departureDate}&return_date=${returnDate}&api_key=${API_KEY}`
         try {
-            const response = await axios.get('http://localhost:5000/api/search-flights', {
-                params:{origin, destination, departureDate}
-            })
-            setFlights(response.data)
+            const response = await axios.get(url)
+            console.log(response.data)
+            setFlights(response.data.flights)
         } catch (error) {
-            console.log('Error fetching flights')
+            console.log('Error fetching flights', error)
         }
     }
-  return ( //search for flghts
+  return ( 
     <div>
             <input type="text" 
             placeholder='Origin'

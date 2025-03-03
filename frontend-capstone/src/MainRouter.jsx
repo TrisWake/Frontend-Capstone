@@ -5,10 +5,7 @@ import Signup from "./components/SignUp/SignUp"
 import Nav from './components/Nav/Nav';
 import Login from './components/Login/Login'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-
-//private routes --> checking to make sure you are logged in
-//passing props --> allows to pass credentials to app
-//Navigating users away --> relocate them to login if not allowed
+import FlightSearch from './components/Travel/Travel';
 
 
 function MainRouter({user, handleUserLogin, handleUserLogout}) { //Router is the parent, Routes will wrap all components
@@ -17,10 +14,10 @@ function MainRouter({user, handleUserLogin, handleUserLogout}) { //Router is the
           <Nav user={user} handleUserLogout={handleUserLogout}/>
           <Routes>
             <Route path='signup' element={<Signup/>}/>
-            <Route path='login' element={user ? <Navigate to ='/movie'/> : <Login handleUserLogin = {handleUserLogin}/>}/>
-            <Route path='/movie' element={
+            <Route path='login' element={user ? <Navigate to ='/'/> : <Login handleUserLogin = {handleUserLogin}/>}/>
+            <Route path='/travel' element={
               <PrivateRoute>
-              <Movie/>
+              <FlightSearch/>
             </PrivateRoute>}/>
             <Route path='/' element={<Home/>}/>
           </Routes>

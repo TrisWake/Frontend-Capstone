@@ -18,12 +18,9 @@ function SignUp() {
     const [usernameError, setUsernameError] = useState('')
     const [passwordError, setPasswordError] = useState('')
     const [passwordConfirmError, setPasswordConfirmError] = useState('')
-    
+
     const handleOnSubmit = async (e) => {
         e.preventDefault()
-        // plug in those error states
-        // firstName isAlpha  setFirstNameError( 'First name must contain only letters)
-        // check password and confirm password are same
         if(!isAlpha(firstName)){
             setFirstNameError('First name must contain only letters')
         }else{
@@ -78,7 +75,8 @@ function SignUp() {
                     })
                 }
             } catch (error) {
-                toast.error(error.response.data.error)
+                toast.error('Please Try Again.')
+                console.log(error)
             }
         }
     }
