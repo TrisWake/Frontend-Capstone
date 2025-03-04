@@ -1,22 +1,21 @@
 import { useState } from 'react'
 import './Login.css'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { jwtDecode } from 'jwt-decode'
 import Axios from '../../utils/Axios'
 import setAxiosAuthToken from '../../utils/setAxiosAuthToken'
+import { useNavigate } from 'react-router-dom'
 
-function Login({handleUserLogin}) {
+function Login({ handleUserLogin }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const navigate = useNavigate() //This is used for redirects
+    const navigate = useNavigate()
 
     const handleOnSubmit = async (e) => {
       e.preventDefault()
       try {
-        // api/user/login 
         const response = await Axios.post('/user/login', {email, password})
-        // email and password in body
+        console.log(response)
         setEmail('')
         setPassword('')
         const jwt = response.data.payload
@@ -29,18 +28,11 @@ function Login({handleUserLogin}) {
         })
         window.localStorage.setItem('jwt', jwt)
         toast.success('User logged in')
-        navigate('/movie')
-
-        // save in local storage jwt
-        // make function else where to be called to hold login data
-        // make function to hold jwt
-        
+        navigate('/home')
       } catch (error) {
         toast.error('Server Error. Try again')
         console.log(error)
       }
-
-      //catch errors
     }
 
   return (

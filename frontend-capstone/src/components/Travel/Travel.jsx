@@ -1,25 +1,30 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
-import TravelList from './TravelList'
 import './Travel.css'
+import { useNavigate } from 'react-router-dom'
 
-    const FlightSearch = ()=>{
+    const FlightSearch = ({onSearch})=>{
         const [origin, setOrigin] = useState('')
         const [destination, setDestination] = useState('')
         const [departureDate, setDepartureDate] = useState('')
         const [returnDate, setReturnDate] = useState('')
-        const [flights, setFlights] = useState([])
+        const [loading, setLoading] = useState(false)
+        const [error, setError] = useState(null)
+
         const API_KEY = 'c5883776698052b67a7a4a5e742705f52b7b644f924093a50d59101ad190ed91'
+        const navigate = useNavigate()
 
     const handleOnSearch = async(e)=>{
         e.preventDefault()
         const url = `https://serpapi.com/search.json?engine=google_flights&q=${origin}+to+${destination}&departure_date=${departureDate}&return_date=${returnDate}&api_key=${API_KEY}`
+        console.log(url)
         try {
             const response = await axios.get(url)
-            console.log(response.data)
-            setFlights(response.data.flights)
+            onSearch(response.data.flights, null)
+            navigate('/flights/results')
         } catch (error) {
+            setError('Error fetching flights. Please try again.')
+            onSearch([], 'Error fetching flights. Please try again')
             console.log('Error fetching flights', error)
         }
     }
@@ -42,17 +47,9 @@ import './Travel.css'
             />
             <button onClick={handleOnSearch}>Search Flights</button>
     
-            {flights && (
-                <div>
-                    {flights.map((flight, index) =>(
-                        <div key={index}>
-                            <h3>{flight.legs[0].departure.dateTime}</h3>
-                            <p>{flight.legs[0].arrival.airport.name}</p>
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
+            {loading && <div>Loading...</div>}
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+    </div>
   )
 }
 
