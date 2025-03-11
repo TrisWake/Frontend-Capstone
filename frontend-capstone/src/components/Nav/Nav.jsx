@@ -12,16 +12,22 @@ function Nav({ user, handleUserLogout }) {
       <div className="right-side-nav">
         <ul>
           {user ? (// Display email of the logged-in user
-            <li>{user.email}</li>
+            <li>
+              <NavLink to='/profile'>
+              {user.email}
+              </NavLink>
+              </li>
           ) : (
             // Show Sign Up link if no user is logged in
             <li>
-              <NavLink to="/signup">Sign Up</NavLink>
+              <NavLink to="/signup">
+              Sign Up
+              </NavLink>
             </li>
           )}
           {user ? (
             <li>
-            <NavLink to="/login" onClick={handleUserLogout}>
+              <NavLink to="/login" onClick={handleUserLogout}>
                 Logout
               </NavLink>
             </li>

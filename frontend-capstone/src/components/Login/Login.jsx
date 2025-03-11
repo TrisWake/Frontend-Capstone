@@ -15,7 +15,6 @@ function Login({ handleUserLogin }) {
       e.preventDefault()
       try {
         const response = await Axios.post('/user/login', {email, password})
-        console.log(response)
         setEmail('')
         setPassword('')
         const jwt = response.data.payload
@@ -28,7 +27,7 @@ function Login({ handleUserLogin }) {
         })
         window.localStorage.setItem('jwt', jwt)
         toast.success('User logged in')
-        navigate('/home')
+        navigate('/')
       } catch (error) {
         toast.error('Server Error. Try again')
         console.log(error)

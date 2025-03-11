@@ -10,7 +10,7 @@ import setAxiosAuthToken from "./utils/setAxiosAuthToken"
 
   function App() {  //entrance point, ToastCOntainer is the Banner with feedback
     const [user, setUser] = useState(null)
-
+ 
     useEffect(()=>{
       const jwt = window.localStorage.getItem('jwt') 
       const currentUser = jwt ? jwtDecode(jwt): null
@@ -36,6 +36,7 @@ import setAxiosAuthToken from "./utils/setAxiosAuthToken"
       setAxiosAuthToken(null)
     }
 
+    
 
     return (
       <>

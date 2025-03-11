@@ -1,0 +1,11 @@
+.home {
+    background-image: url('airplane.jpg'); /* Path to the image in the public folder */
+    background-size: cover;         /* Ensure the image covers the entire page */
+    background-position: center;    /* Centers the background image */
+    height: 100vh;                  /* Makes the background take up the full height of the viewport */
+    width: 100vw;                    /* Ensures it takes up the full width */
+    color: white;                   /* Adjust text color for visibility */
+    display: flex;                  /* Allows content centering */
+    justify-content: center;        /* Centers content horizontally */
+    align-items: center;            /* Centers content vertically */
+  }

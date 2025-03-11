@@ -2,7 +2,7 @@ import {useState} from 'react'
 import './SignUp.css'
 import { isAlpha, isAlphanumeric, isEmail } from "validator"
 import { Slide, toast } from "react-toastify"
-import Axios from '../../utils/Axios'
+import axios from 'axios'
 
 
 function SignUp() {
@@ -21,39 +21,45 @@ function SignUp() {
 
     const handleOnSubmit = async (e) => {
         e.preventDefault()
+        let isValid = true
         if(!isAlpha(firstName)){
             setFirstNameError('First name must contain only letters')
+            let isValid = false
         }else{
             setFirstNameError('')
         }
         if(!isAlpha(lastName)){
             setLastNameError('First name must contain only letters')
+            isValid = false
         }else{
             setLastNameError('')
         }
         if(!isAlphanumeric(username)){
             setUsernameError('Username must be alphanumeric.')
+            isValid = false
         }else{
             setUsernameError('')
         }
         if(!isEmail(email)){
             setEmailError('Email must be valid')
+            isValid = false
         }else{
             setEmailError('')
         }
         if(password !== confirmPassword){
             setPasswordConfirmError('Passwords must match')
+            isValid = false
         }else{
             setPasswordConfirmError('')
         }
         if(firstNameError.length === 0 && 
-            lastNameError.length === 0 && 
-            usernameError.length === 0 && 
+            lastNameError.length === 0 &&
+            usernameError.length === 0 &&
             emailError.length === 0 && 
             passwordConfirmError.length === 0
         ){
             try {
-                const user = await Axios.post('/user/create-user', {
+                const user = await axios.post('/user/create-user', {
                     firstName, lastName, username, email, password
                 })
                 if(user){
@@ -80,7 +86,15 @@ function SignUp() {
             }
         }
     }
+    if(isValid){
+        console.log('Form submitted successfully')
+    }
 
+    handleOnBlur = (e)=>{
+        if(e.target.name.length === 0){
+            eval(`set${e.target.name}Error`)
+        }
+    }
   return (
     <div className="container">
         <div className="form-text">Sign up</div>
