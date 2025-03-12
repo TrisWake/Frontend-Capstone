@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import './Travel.css'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Axios from '../../utils/Axios'
+
 
     const FlightSearch = ({onSearch})=>{
         const [origin, setOrigin] = useState('')
@@ -10,6 +11,7 @@ import Axios from '../../utils/Axios'
         const [returnDate, setReturnDate] = useState('')
         const [passengers, setPassengers] = useState('')
         const [classOfService, setClassOfService] = useState('economy')
+        const [flightType, setFlightType] = useState('')
         const [loading, setLoading] = useState(false)
         const [error, setError] = useState(null)
 
@@ -17,22 +19,32 @@ import Axios from '../../utils/Axios'
 
     const handleOnSearch = async(e)=>{
         e.preventDefault()
+        if(!origin || !destination || !departureDate || !returnDate){
+            setError("Please fill in all fields")
+            return
+        }
+        setLoading(true)
         try {
             const response = await Axios.post('/search/search-flights', {
-                origin: "MEM",
-                destination: "MDW", 
-                departureDate: "2025-03-28", 
-                returnDate: "2025-04-03"
+                origin,
+                destination, 
+                departureDate, 
+                returnDate,
+                passengers,
+                flightType,
+                classOfService
             })
+            setLoading(false)
             onSearch(response.data.payload, null)
         } catch (error) {
-            onSearch(null, error)
-            console.log(error)
+            onSearch(null, error.message)
+            setLoading(false)
         }
     }
 
   return ( 
     <div>
+        <form onSubmit={handleOnSearch}>
             <input type="text" 
             placeholder='Origin'
             name='Origin'
@@ -57,13 +69,17 @@ import Axios from '../../utils/Axios'
                 onChange={(e)=>setPassengers(e.target.value)}
                 placeholder='Travelers'
             />
+            <select name="classOfService" value={flightType} onChange={(e) => setClassOfService(e.target.value)}>
+                <option value="round-trip">Round Trip</option>
+                <option value="one-way">One-Way</option>
+            </select>
             <select name="classOfService" value={classOfService} onChange={(e) => setClassOfService(e.target.value)}>
                 <option value="economy">Economy</option>
                 <option value="business">Business</option>
                 <option value="first">First Class</option>
             </select>
-            <button onClick={handleOnSearch}>Search Flights</button>
-    
+            <button type='submit'>Search Flights</button>
+            </form>
             {loading && <div>Loading...</div>}
       {error && <div style={{ color: 'red' }}>{error}</div>}
     </div>
