@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import './Login.css'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { jwtDecode } from 'jwt-decode'
 import Axios from '../../utils/Axios'
 import setAxiosAuthToken from '../../utils/setAxiosAuthToken'
-import { useNavigate } from 'react-router-dom'
+
 
 function Login({ handleUserLogin }) {
     const [email, setEmail] = useState('')
@@ -27,7 +28,7 @@ function Login({ handleUserLogin }) {
         })
         window.localStorage.setItem('jwt', jwt)
         toast.success('User logged in')
-        navigate('/')
+        navigate('/travel')
       } catch (error) {
         toast.error('Server Error. Try again')
         console.log(error)

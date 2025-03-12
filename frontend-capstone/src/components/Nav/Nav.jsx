@@ -34,7 +34,7 @@ function Nav({ user, handleUserLogout }) {
           ) : (
             // Show Sign In link if no user is logged in
             <li>
-              <NavLink to="/login">Sign In</NavLink>
+              <NavLink to="/signin">Sign In</NavLink>
             </li>
           )}
         </ul>

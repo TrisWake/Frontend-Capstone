@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import './Profile.css'
 import Axios from "../../utils/Axios";
 import { toast } from "react-toastify";
+
 
 function Profile({userID}) {
     const [firstName, setFirstName] = useState('')
@@ -14,17 +15,22 @@ function Profile({userID}) {
             try {
                 if(userID){
                     const response = await Axios.get(`/user/get-user-by-id/${userID}`)
+                    if(response.data && response.data.payload){
                     const {firstName, lastName, email, username} = response.data.payload
                     setFirstName(firstName)
                     setLastName(lastName)
                     setEmail(email)
                     setUsername(username)
                 }
+            }
             } catch (error) {
                 console.log(error)
+                toast.error("Erorr fetching profile data")
             }
         }
-        getInfo()
+        if(userID){
+            getInfo()
+        }
     }, [userID])
 
     const updateUser = async(e)=>{
@@ -66,6 +72,9 @@ function Profile({userID}) {
                     name="username"
                     onChange={e=> setUsername(e.target.value)}
                     value={username}/>
+                </div>
+                <div className="input-div">
+                    <button type="submit">Update</button>
                 </div>
             </form>
         </div>

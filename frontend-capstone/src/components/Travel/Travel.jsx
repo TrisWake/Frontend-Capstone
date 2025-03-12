@@ -26,14 +26,15 @@ import Axios from '../../utils/Axios'
         setLoading(true)
         try {
             const response = await Axios.post('/search/search-flights', {
-                origin,
-                destination, 
-                departureDate, 
-                returnDate,
-                passengers,
-                flightType,
-                classOfService
+                origin: 'MEM',
+                destination: "MDW", 
+                departureDate: "2025-05-01", 
+                returnDate: "2025-05-10",
+                passengers: "1",
+                flightType: "Round trip",
+                classOfService:"Economy"
             })
+            console.log(response.data)
             setLoading(false)
             onSearch(response.data.payload, null)
         } catch (error) {

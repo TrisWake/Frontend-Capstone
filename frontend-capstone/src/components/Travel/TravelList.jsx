@@ -10,10 +10,11 @@ function TravelList({ flightResults, errorMessage }) {
     return flightResults.map((flight)=>(
                     <div key={flight.id} className='flight-item'>
                         <Link to={`/travel/${flight.id}`} className='flight-link'>
-                            <h3>{flight.airline}</h3>
-                            <p>Departure: {flight.departure}</p>
-                            <p>Return: {flight.arrival}</p>
-                            <p>Price: {flight.price}</p>
+                            <h3>{payload.airports.best_flights}</h3>
+                            <p>Departure: {payload.flights[0].departure_airport}</p>
+                            <p>Return: {payload.flights[0].arrival_airport}</p>
+                            <p>Price: {payload.flights[0].price}</p>
+                            <p>Type: {payload.flights[0].type}</p>
                         </Link>
                     </div>
                 )
